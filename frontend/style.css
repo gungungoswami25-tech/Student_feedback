@@ -1,0 +1,1331 @@
+
+/* =========================================================
+   STUDENT FEEDBACK MANAGER
+   Modern Responsive Design System
+   ========================================================= */
+
+
+/* =========================================================
+   1. DESIGN TOKENS / CSS VARIABLES
+   ========================================================= */
+
+:root {
+
+    /* Colors */
+
+    --color-primary: #6366f1;
+    --color-primary-dark: #4f46e5;
+    --color-primary-light: #eef2ff;
+
+    --color-text: #1e1b4b;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #9ca3af;
+
+    --color-background: #f5f7fb;
+    --color-surface: rgba(255, 255, 255, 0.82);
+    --color-surface-solid: #ffffff;
+
+    --color-border: rgba(99, 102, 241, 0.12);
+    --color-input-border: #dfe3ef;
+
+    --color-success: #16a34a;
+    --color-danger: #dc3545;
+    --color-warning: #eab308;
+
+    /* Shadows */
+
+    --shadow-sm:
+        0 4px 14px rgba(30, 27, 75, 0.05);
+
+    --shadow-md:
+        0 10px 30px rgba(30, 27, 75, 0.08);
+
+    --shadow-lg:
+        0 20px 50px rgba(30, 27, 75, 0.12);
+
+    /* Radius */
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    /* Spacing */
+
+    --space-xs: 6px;
+    --space-sm: 10px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Typography */
+
+    --font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+    /* Transitions */
+
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+
+/* =========================================================
+   2. DARK THEME
+   Automatically follows system theme
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    :root {
+
+        --color-text: #f8fafc;
+        --color-text-secondary: #a5adc0;
+        --color-text-muted: #7d8597;
+
+        --color-background: #0f172a;
+        --color-surface: rgba(30, 41, 59, 0.78);
+        --color-surface-solid: #1e293b;
+
+        --color-border: rgba(148, 163, 184, 0.14);
+        --color-input-border: #475569;
+
+        --color-primary-light: rgba(99, 102, 241, 0.16);
+
+        --shadow-sm:
+            0 4px 14px rgba(0, 0, 0, 0.2);
+
+        --shadow-md:
+            0 10px 30px rgba(0, 0, 0, 0.25);
+
+        --shadow-lg:
+            0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+}
+
+
+/* =========================================================
+   3. RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    font-family: var(--font-family);
+
+    color: var(--color-text);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(99, 102, 241, 0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(168, 85, 247, 0.10),
+            transparent 35%
+        ),
+        var(--color-background);
+
+    line-height: 1.6;
+
+    padding: var(--space-2xl) var(--space-lg);
+}
+
+
+/* =========================================================
+   4. ACCESSIBILITY
+   ========================================================= */
+
+.sr-only {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+:focus-visible {
+    outline: 3px solid rgba(99, 102, 241, 0.35);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   5. MAIN APP
+   ========================================================= */
+
+.app {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   6. HEADER
+   ========================================================= */
+
+.app-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+
+.app-header__content {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+
+.app-header__badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 12px;
+
+    margin-bottom: var(--space-md);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 999px;
+
+    background: var(--color-primary-light);
+
+    color: var(--color-primary);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.app-header__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: var(--space-md);
+}
+
+
+.app-header__subtitle {
+    color: var(--color-text-secondary);
+
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   7. STATISTICS
+   CSS GRID
+   ========================================================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-lg);
+
+    margin-bottom: var(--space-xl);
+}
+
+
+.stat-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space-lg);
+
+    padding: var(--space-xl);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    backdrop-filter: blur(16px);
+
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow: var(--shadow-md);
+
+    transition:
+        transform var(--transition-normal),
+        box-shadow var(--transition-normal);
+}
+
+
+.stat-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+.stat-card__icon {
+    display: grid;
+
+    place-items: center;
+
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-light);
+
+    font-size: 24px;
+}
+
+
+.stat-card__title {
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+
+    margin-bottom: 4px;
+}
+
+
+.stat-card__value {
+    color: var(--color-primary);
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   8. FEEDBACK SECTION
+   ========================================================= */
+
+.feedback-section {
+    margin-bottom: var(--space-xl);
+}
+
+
+.feedback-section--list {
+    margin-top: var(--space-2xl);
+}
+
+
+/* =========================================================
+   9. SECTION HEADING
+   ========================================================= */
+
+.section-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space-md);
+
+    margin-bottom: var(--space-xl);
+}
+
+
+.section-heading__icon {
+    display: grid;
+
+    place-items: center;
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-light);
+
+    font-size: 20px;
+}
+
+
+.section-heading__title {
+    font-size: 24px;
+
+    font-weight: 750;
+
+    line-height: 1.2;
+
+    margin-bottom: 4px;
+}
+
+
+.section-heading__text {
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   10. FEEDBACK FORM
+   ========================================================= */
+
+.feedback-form {
+    padding: clamp(22px, 4vw, 34px);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-xl);
+
+    background: var(--color-surface);
+
+    backdrop-filter: blur(16px);
+
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+
+.form-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--color-text);
+
+    font-size: 14px;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   11. FORM CONTROLS
+   ========================================================= */
+
+.form-control {
+    width: 100%;
+
+    border: 1px solid var(--color-input-border);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface-solid);
+
+    color: var(--color-text);
+
+    font: inherit;
+
+    font-size: 14px;
+
+    padding: 13px 14px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.form-control::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+.form-control:hover {
+    border-color: #aeb5ca;
+}
+
+
+.form-control:focus {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(99, 102, 241, 0.10);
+}
+
+
+.form-control:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    background: var(--color-background);
+}
+
+
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: var(--color-danger);
+}
+
+
+.form-control--textarea {
+    min-height: 125px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   12. BUTTON DESIGN SYSTEM
+   ========================================================= */
+
+.button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: var(--radius-md);
+
+    padding: 13px 18px;
+
+    font: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+
+.button:active {
+    transform: translateY(0);
+}
+
+
+.button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+.button--primary {
+    background: linear-gradient(
+        135deg,
+        var(--color-primary),
+        var(--color-primary-dark)
+    );
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px rgba(99, 102, 241, 0.25);
+}
+
+
+.button--primary:hover {
+    box-shadow:
+        0 12px 26px rgba(99, 102, 241, 0.35);
+}
+
+
+.button--secondary {
+    background: var(--color-primary-light);
+
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   13. FORM MESSAGE
+   ========================================================= */
+
+.form-message {
+    min-height: 24px;
+
+    margin-top: var(--space-md);
+
+    text-align: center;
+
+    color: var(--color-primary);
+
+    font-size: 14px;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   14. SEARCH / FILTER
+   CSS GRID
+   ========================================================= */
+
+.filters {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2fr)
+        minmax(180px, 1fr);
+
+    gap: var(--space-md);
+
+    margin-bottom: var(--space-xl);
+}
+
+
+.filter-control {
+    position: relative;
+}
+
+
+.filter-control__icon {
+    position: absolute;
+
+    left: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+
+.filter-control__input {
+    width: 100%;
+
+    min-height: 48px;
+
+    border: 1px solid var(--color-input-border);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface-solid);
+
+    color: var(--color-text);
+
+    font: inherit;
+
+    padding: 12px 14px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.filter-control:first-child .filter-control__input {
+    padding-left: 42px;
+}
+
+
+.filter-control__input:hover {
+    border-color: #aeb5ca;
+}
+
+
+.filter-control__input:focus {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(99, 102, 241, 0.10);
+}
+
+
+/* =========================================================
+   15. FEEDBACK GRID
+   ========================================================= */
+
+.feedback-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-lg);
+}
+
+
+/* =========================================================
+   16. FEEDBACK CARD
+   ========================================================= */
+
+.feedback-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: var(--space-lg);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow: var(--shadow-sm);
+
+    animation: cardEnter 0.4s ease both;
+
+    transition:
+        transform var(--transition-normal),
+        box-shadow var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+
+.feedback-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--color-primary),
+            #a855f7
+        );
+}
+
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(99, 102, 241, 0.25);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+.feedback-card h3 {
+    color: var(--color-text);
+
+    font-size: 19px;
+
+    font-weight: 750;
+
+    margin-bottom: 10px;
+}
+
+
+.feedback-card .rating {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 10px;
+
+    margin-bottom: 14px;
+
+    border-radius: 999px;
+
+    background: #fff8e7;
+
+    color: #c88b00;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.feedback-card > p {
+    min-height: 46px;
+
+    margin-bottom: 19px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   17. CARD BUTTONS
+   FLEXBOX
+   ========================================================= */
+
+.card-buttons {
+    display: flex;
+
+    gap: var(--space-sm);
+
+    padding-top: 15px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+.card-buttons button {
+    flex: 1;
+
+    border: none;
+
+    border-radius: var(--radius-sm);
+
+    padding: 10px 14px;
+
+    font: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.card-buttons button:hover {
+    transform: translateY(-2px);
+}
+
+
+.card-buttons button:focus-visible {
+    outline: 3px solid rgba(99, 102, 241, 0.25);
+
+    outline-offset: 2px;
+}
+
+
+.edit-btn {
+    background: #eef0ff;
+
+    color: #5050c9;
+}
+
+
+.edit-btn:hover {
+    background: #e0e3ff;
+
+    box-shadow:
+        0 5px 14px rgba(80, 80, 201, 0.14);
+}
+
+
+.delete-btn {
+    background: #fff0f1;
+
+    color: #d33b4b;
+}
+
+
+.delete-btn:hover {
+    background: #ffe1e4;
+
+    box-shadow:
+        0 5px 14px rgba(211, 59, 75, 0.14);
+}
+
+
+/* =========================================================
+   18. EMPTY STATE
+   ========================================================= */
+
+#feedbackContainer > p {
+    grid-column: 1 / -1;
+
+    padding: 40px 20px;
+
+    border: 1px dashed var(--color-input-border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    color: var(--color-text-secondary);
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   19. LOADING SKELETON
+   ========================================================= */
+
+.skeleton-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-lg);
+}
+
+
+.skeleton-card {
+    padding: var(--space-lg);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+
+.skeleton {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-sm);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(148, 163, 184, 0.12),
+            rgba(148, 163, 184, 0.28),
+            rgba(148, 163, 184, 0.12)
+        );
+
+    background-size: 200% 100%;
+
+    animation: skeletonLoading 1.5s infinite;
+}
+
+
+.skeleton--title {
+    width: 55%;
+    height: 22px;
+
+    margin-bottom: 16px;
+}
+
+
+.skeleton--rating {
+    width: 80px;
+    height: 28px;
+
+    margin-bottom: 18px;
+}
+
+
+.skeleton--text {
+    width: 100%;
+    height: 14px;
+
+    margin-bottom: 9px;
+}
+
+
+.skeleton--short {
+    width: 70%;
+}
+
+
+/* =========================================================
+   20. MODAL
+   ========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+}
+
+
+.modal[hidden] {
+    display: none;
+}
+
+
+.modal__overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.62);
+
+    backdrop-filter: blur(8px);
+}
+
+
+.modal__content {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(500px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: var(--space-xl);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-xl);
+
+    background: var(--color-surface-solid);
+
+    box-shadow: var(--shadow-lg);
+
+    animation: modalEnter 0.3s ease;
+}
+
+
+.modal__close {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--color-primary-light);
+
+    color: var(--color-primary);
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.modal__close:hover {
+    transform: rotate(90deg);
+
+    background: rgba(99, 102, 241, 0.18);
+}
+
+
+.modal__actions {
+    display: flex;
+
+    gap: var(--space-sm);
+
+    margin-top: var(--space-lg);
+}
+
+
+.modal__actions .button {
+    width: auto;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   21. ANIMATIONS
+   ========================================================= */
+
+@keyframes cardEnter {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes modalEnter {
+
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+}
+
+
+@keyframes skeletonLoading {
+
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+
+}
+
+
+/* =========================================================
+   22. REDUCED MOTION ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   23. TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    body {
+        padding: 35px 18px;
+    }
+
+
+    .feedback-grid,
+    .skeleton-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   24. MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 14px;
+    }
+
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+
+    .stat-card {
+        padding: 20px;
+    }
+
+
+    .feedback-form {
+        padding: 22px;
+    }
+
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+
+    .section-heading__title {
+        font-size: 21px;
+    }
+
+
+    .modal__content {
+        padding: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   25. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+
+    .app-header__title {
+        font-size: 27px;
+    }
+
+
+    .stat-card__value {
+        font-size: 27px;
+    }
+
+
+    .card-buttons {
+        flex-direction: column;
+    }
+
+
+    .card-buttons button {
+        width: 100%;
+    }
+
+
+    .modal__actions {
+        flex-direction: column;
+    }
+
+
+    .modal__actions .button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   26. CUSTOM SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #b7bdcf;
+
+    border-radius: 999px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #929ab1;
+}
+
+
+/* =========================================================
+   27. TEXT SELECTION
+   ========================================================= */
+
+::selection {
+    background: var(--color-primary);
+
+    color: white;
+}
